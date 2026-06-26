@@ -1,75 +1,153 @@
-# React + TypeScript + Vite
+# TypeScript React — Learning Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A hands-on React project built with TypeScript, exploring core TSX concepts like typed props, typed state, and typed event handlers through practical UI components.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Overview
 
-## React Compiler
+This project was created as a personal exercise in applying TypeScript to a React application. It demonstrates how to correctly type components, props, state, and DOM events — all common pain points when transitioning from plain JavaScript to TypeScript in React.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+The app renders two components:
 
-Note: This will impact Vite dev & build performances.
+- **Button** — displays a book record from state and lets you toggle between two values
+- **Form** — a controlled input that echoes typed text in real time
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Technology | Version |
+|---|---|
+| React | ^19.2.6 |
+| TypeScript | ~6.0.2 |
+| Vite | ^8.0.12 |
+| ESLint | ^10.3.0 |
+| @vitejs/plugin-react | ^6.0.1 |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+
+```
+src/
+├── components/
+│   └── Button.tsx      # Button component + exported Form component
+├── App.tsx             # Root component, composes Button and Form
+├── main.tsx            # Entry point, mounts React app
+└── index.css           # Global styles
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Prerequisites
+
+- Node.js 18+
+- npm or yarn
+
+### Installation
+
+```bash
+# Clone the repository
+git clone <your-repo-url>
+cd typescript
+
+# Install dependencies
+npm install
 ```
+
+### Running the Dev Server
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) in your browser.
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+### Preview the Production Build
+
+```bash
+npm run preview
+```
+
+### Linting
+
+```bash
+npm run lint
+```
+
+---
+
+## Key TypeScript Concepts Used
+
+### Typed Props
+
+```tsx
+interface Props {
+  text: string;
+  onClick?: () => void;  // optional callback
+}
+
+const Button = (props: Props) => { ... }
+```
+
+### Typed State with Interfaces
+
+```tsx
+interface Book {
+  name: string;
+  price: number;
+}
+
+const [value, setValue] = useState<Book>(initialValue);
+```
+
+### Typed Event Handlers
+
+```tsx
+// Controlled input
+const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setValue(e.target.value);
+};
+
+// Form submission
+const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
+  e.preventDefault();
+};
+```
+
+### Optional / Union Types in State
+
+```tsx
+const [value, setValue] = useState<string | undefined>();
+```
+
+---
+
+## What I Learned
+
+- How to define and apply TypeScript `interface` for component props and state shapes
+- The difference between `React.ChangeEvent`, `React.SyntheticEvent`, and when to use each
+- Why `password` in a form interface should be typed as `string`, not `number`
+- How `flex-direction: column` must be applied to the direct parent of the elements you want stacked
+- How to use `Partial<T>` for optional prop defaults
+
+---
+
+## Author
+
+**pr0-gramm3r** — [kumarayush111111112@gmail.com](mailto:kumarayush111111112@gmail.com)
+
+---
+
+## License
+
+This project is for learning purposes and is not licensed for commercial use.
